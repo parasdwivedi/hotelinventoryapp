@@ -1,0 +1,51 @@
+<!-- {{ rooms$ | async | json }} -->
+
+<router-outlet></router-outlet>
+
+<div [ngSwitch]="role1">
+  <div *ngSwitchCase="'Admin'">
+    <!-- <h1>Welcome to {{ hotelName }}</h1> -->
+    <hinv-header></hinv-header>
+
+    <div [hidden]="hideRooms">
+      Number Of Rooms :
+      <div [innerText]="numberOfRooms"></div>
+    </div>
+    <!-- <button routerLink="add">Add Room</button> -->
+    <!-- {{ rooms.availableRooms ?? "No Rooms" }} -->
+    <div>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Price"
+        [formControl]="pricefilter"
+      />
+      Price Filter
+    </div>
+
+    <div>{{ selectedRoom | json }}</div>
+    <div *ngIf="rooms$ | async as rooms">
+      <hinv-rooms-list
+        [rooms1]="rooms"
+        [title]="title"
+        (selectedRoom)="selectRoom($event)"
+        [price]="pricefilter.value"
+      >
+      </hinv-rooms-list>
+    </div>
+  </div>
+  <div *ngSwitchCase="'User'">Not allowed to make changes!</div>
+  <div *ngSwitchDefault>Something went wrong!</div>
+</div>
+
+<!-- <button (click)="editRoom()">Edit Room</button> -->
+<!-- 
+<button (click)="toggle()">Toggle</button> -->
+
+<!-- <button (click)="deleteRoom()">Delete</button> -->
+
+<h1>Total Bytes downloaded are: {{ totalBytes }}</h1>
+<!-- 
+<h1>{{ getError$ | async }}</h1>
+
+<h1>Room Count is {{ roomCount$ | async }}</h1> -->
